@@ -1,8 +1,10 @@
-var mongoose = require('../../lib/mongo_connect');
+var mongoose = require('../../agriserver/lib/mongo_connect');
 
-var config = require('../../lib/sysconfig')
+var config = require('../../agriserver/lib/sysconfig')
 
-var models = require("../../models")
+var models = require("../server/models")({
+    mongoose: mongoose,
+});
 
 var password = process.argv[2];
 
@@ -20,5 +22,6 @@ user.save(function(err, account) {
         console.log('Failure creating account ' + err)        
     }
     
+    console.log('Complete. Closing connection')
     mongoose.connection.close(); 
 });

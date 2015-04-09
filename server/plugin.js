@@ -4,19 +4,16 @@ var fs = require('fs');
 var passport = require('passport');
 var crypto = require("crypto");
 
-var baucis = require('baucis');
-
-var models = require('./models');
-
-var logger;
+var logger, models, baucis;
 
 var api = {
     _config: undefined,
 
     config: function(config) {
         this._config = config;
-        
+        models = require('./models')(config);
         logger = config.logger;
+        baucis = config.baucis;
     },
 
     init: function() {
@@ -32,14 +29,11 @@ var api = {
     },
 
     pre: function() {
-        
-
         this._config.app.use(passport.initialize());
         this._config.app.use(passport.session());
     },
 
-    routes: function() {
-console.log("In routes")        
+    routes: function() {    
         // Login function to generate an API token
         this._config.app.use('/api/v1/token', login);
 
@@ -100,15 +94,16 @@ var ensureAuthenticated = function(req, res, next) {
         })
     }
     else {
+        console.log("Failed log in")
         // For session based auth
         
         //res.redirect('/login')
-    
         return res.json(401, { error: 'Access Denied' });            
     }        
 }
 
 var login = function(req, res, next) {
+
     passport.authenticate('local', { session: false }, function(err, user, info) {
 
         if (err) { 
@@ -148,19 +143,3 @@ var login = function(req, res, next) {
 
 
 module.exports = api;
-
-//module.exports = function(config) {
-//    var app = config.app;
-    
-    /*var index = function(req, res) {
-        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-        res.header("Pragma", "no-cache");
-        res.header("X-Frame-Options", "Deny");
-        
-        res.sendfile('index.html', {root: config.path + '/static'});
-    }
-
-    app.get(config.url_base + '/', index);
-    app.get(config.url_base + '/*', index);
-*/      
-//}

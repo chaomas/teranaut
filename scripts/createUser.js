@@ -1,7 +1,5 @@
 'use strict';
 
-var config = require('../../lib/sysconfig')
-
 var argv = require('yargs')
     .usage('Usage: $0 -a API token -u username -p password -f firstname -l lastname -s [API server URL] -r [role] ')
     .demand(['u','p','f','l'])
