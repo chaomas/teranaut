@@ -1,8 +1,11 @@
 module.exports = function(baucis) {
     var models = require("../models");
 
-    var node = baucis.rest({ singular: "Node", findBy: "node_id" });
-    var user = baucis.rest({ singular: "User", findBy: "username" });
+    //var node = baucis.rest({ singular: "Node", findBy: "node_id" });
+    //var user = baucis.rest({ singular: "User", findBy: "username" });
+    
+    var node = baucis.rest("Node" ).findBy("node_id");
+    var user = baucis.rest("User" ).findBy("username");
     
     /**
      * Run custom handlers on the  collection.
@@ -43,7 +46,7 @@ module.exports = function(baucis) {
     }
 
     // Only admin is allowed to update these data types
-    node.request('post put del', requireAdmin);
+    node.request('post put delete', requireAdmin);
     
     var requireUser = function(req, res, next) {
         
@@ -63,7 +66,7 @@ module.exports = function(baucis) {
     }
 
     // Admin can update and a user can update their own record, but not change their role
-    user.request('get head post put del', requireUser);
+    user.request('get head post put delete', requireUser);
 
     var restrictQuery = function(req, res, next) {
         // All queries coming from a client should be restricted to the logged in user.
