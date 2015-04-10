@@ -1,5 +1,6 @@
-module.exports = function(baucis) {
-    var models = require("../models");
+module.exports = function(config) {
+    var baucis = config.baucis;
+    var models = require("../models")(config);
 
     //var node = baucis.rest({ singular: "Node", findBy: "node_id" });
     //var user = baucis.rest({ singular: "User", findBy: "username" });

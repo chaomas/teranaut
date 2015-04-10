@@ -4,22 +4,23 @@ var fs = require('fs');
 var passport = require('passport');
 var crypto = require("crypto");
 
-var logger, models, baucis;
+var logger, models, baucis, config;
 
 var api = {
     _config: undefined,
 
-    config: function(config) {
-        this._config = config;
-        models = require('./models')(config);
-        logger = config.logger;
-        baucis = config.baucis;
+    config: function(pluginConfig) {
+        this._config = pluginConfig;        
+        models = require('./models')(pluginConfig);
+        logger = pluginConfig.logger;
+        baucis = pluginConfig.baucis;
+        config = pluginConfig.server_config;
     },
 
     init: function() {
 
         // Configure Baucis to know about the application models
-        require('./api/baucis')(baucis);
+        require('./api/baucis')(this._config);
 
         var user = models.User;
 
@@ -33,14 +34,18 @@ var api = {
         this._config.app.use(passport.session());
     },
 
-    routes: function() {    
+    routes: function(deferred) {    
         // Login function to generate an API token
         this._config.app.use('/api/v1/token', login);
 
         // All API endpoints require authentication
         this._config.app.use('/api/v1', ensureAuthenticated);
 
-        this._config.app.use('/api/v1', baucis());
+        // THIS needs to be deferred until after all plugins have had a chance to load
+        var config = this._config;
+        deferred.push(function() {
+            config.app.use('/api/v1', baucis());    
+        })        
 
         this._config.app.post('/login', passport.authenticate('local'), function(req, res) {
             //res.redirect('/');    
@@ -60,14 +65,13 @@ var api = {
 }
 
 var ensureAuthenticated = function(req, res, next) { 
-
     // See if the session is authenticated
     if (req.isAuthenticated()) { 
         return next(); 
     }
     // API auth based on tokens
     else if (req.query.token) {
-        user.findOne({api_token: req.query.token}, function(err, account) {
+        models.User.findOne({api_token: req.query.token}, function(err, account) {
             if (err) {
                 throw err;
             }
@@ -75,6 +79,7 @@ var ensureAuthenticated = function(req, res, next) {
             if (account) {
                 req.user = account;
                 // If there's redis session storage available we add the login to the session.
+               
                 if (config.api.redis_ip) {                    
                     req.logIn(account, function(err) {
                         if (err) { 
@@ -140,6 +145,5 @@ var login = function(req, res, next) {
         });
     })(req, res, next);
 }
-
 
 module.exports = api;
