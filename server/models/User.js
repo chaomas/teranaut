@@ -4,8 +4,8 @@ var model;
 
 module.exports = function(config) {
     var logger = config.logger;
-    var mongoose = config.mongoose;
-    
+    var mongoose = config.mongodb;
+
     if (! model) {
         var passportLocalMongoose = require('passport-local-mongoose');
         var crypto = require('crypto');
@@ -16,9 +16,9 @@ module.exports = function(config) {
             client_id:      { type: Number, required: true },
             firstname:      String,
             lastname:       String,
-            role:           { 
-                type:       String, 
-                required:   true, 
+            role:           {
+                type:       String,
+                required:   true,
                 enum:       ['admin', 'analyst', 'user', 'domains-user'],
                 default:    'user'
             },
@@ -28,12 +28,12 @@ module.exports = function(config) {
             api_token:      String,
 
             created:        { type: Date, default: Date.now }, // Date the network was added
-            updated:        { type: Date, default: Date.now },    
+            updated:        { type: Date, default: Date.now },
         });
 
         userSchema.plugin(passportLocalMongoose);
 
-        userSchema.pre('save', function (next) { 
+        userSchema.pre('save', function (next) {
             this.updated = new Date();
 
             if (!this.isModified('hash')) return next();
@@ -46,7 +46,7 @@ module.exports = function(config) {
                     return next(err);
                 }
 
-                var shasum = crypto.createHash('sha1');                
+                var shasum = crypto.createHash('sha1');
                 crypto.randomBytes(128, function(err, buf) {
                     if (err) {
                         logger.error("Error generating randomBytes on User save.");
@@ -58,8 +58,8 @@ module.exports = function(config) {
                     self.api_token = token;
 
                     next()
-                })        
-            }) 
+                })
+            })
         });
 
         userSchema.index({ 'client_id': 1, 'username' : 1 });

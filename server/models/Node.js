@@ -4,7 +4,7 @@ var model;
 
 module.exports = function(config) {
     var logger = config.logger;
-    var mongoose = config.mongoose;
+    var mongoose = config.mongodb;
 
     if (! model) {
         var Schema = mongoose.Schema;
@@ -17,24 +17,24 @@ module.exports = function(config) {
             friendly_name:  String,     // Longer full name of the node
             address:        String,     // Street address where the node is located if fixed.
             install_date:   Date,       // Date the node was first installed
-            
+
             created:        { type: Date, default: Date.now }, // Date the node record was added. Different than install_date
             updated:        { type: Date, default: Date.now },
-            
-            location: { // This is the initial or default location of the node. 
+
+            location: { // This is the initial or default location of the node.
                 'type': {
                     type:       String,
                     required:   true,
                     enum:       ['Point', 'LineString', 'Polygon'],
                     default:    'Point'
                 },
-                coordinates: [], 
+                coordinates: [],
             }
         });
 
         nodeSchema.index({ 'node_id' : 1 });
-        model = mongoose.model('Node', nodeSchema);     
+        model = mongoose.model('Node', nodeSchema);
     }
-    
+
     return model;
 }

@@ -10,7 +10,7 @@ var api = {
     _config: undefined,
 
     config: function(pluginConfig) {
-        this._config = pluginConfig;        
+        this._config = pluginConfig;
         models = require('./models')(pluginConfig);
         logger = pluginConfig.logger;
         baucis = pluginConfig.baucis;
@@ -34,7 +34,7 @@ var api = {
         this._config.app.use(passport.session());
     },
 
-    routes: function(deferred) {    
+    routes: function(deferred) {
         // Login function to generate an API token
         this._config.app.use('/api/v1/token', login);
 
@@ -44,11 +44,11 @@ var api = {
         // THIS needs to be deferred until after all plugins have had a chance to load
         var config = this._config;
         deferred.push(function() {
-            config.app.use('/api/v1', baucis());    
-        })        
+            config.app.use('/api/v1', baucis());
+        })
 
         this._config.app.post('/login', passport.authenticate('local'), function(req, res) {
-            //res.redirect('/');    
+            //res.redirect('/');
             res.send(200, 'login successful');
         });
 
@@ -64,10 +64,10 @@ var api = {
     }
 }
 
-var ensureAuthenticated = function(req, res, next) { 
+var ensureAuthenticated = function(req, res, next) {
     // See if the session is authenticated
-    if (req.isAuthenticated()) { 
-        return next(); 
+    if (req.isAuthenticated()) {
+        return next();
     }
     // API auth based on tokens
     else if (req.query.token) {
@@ -79,11 +79,11 @@ var ensureAuthenticated = function(req, res, next) {
             if (account) {
                 req.user = account;
                 // If there's redis session storage available we add the login to the session.
-               
-                if (config.api.redis_ip) {                    
+
+                if (config.api.redis_ip) {
                     req.logIn(account, function(err) {
-                        if (err) { 
-                            return next(err); 
+                        if (err) {
+                            return next(err);
                         }
 
                         return next();
@@ -94,37 +94,36 @@ var ensureAuthenticated = function(req, res, next) {
                 }
             }
             else {
-                return res.json(401, { error: 'Access Denied' });                    
-            }            
+                return res.json(401, { error: 'Access Denied' });
+            }
         })
     }
     else {
-        console.log("Failed log in")
         // For session based auth
-        
+
         //res.redirect('/login')
-        return res.json(401, { error: 'Access Denied' });            
-    }        
+        return res.json(401, { error: 'Access Denied' });
+    }
 }
 
 var login = function(req, res, next) {
 
     passport.authenticate('local', { session: false }, function(err, user, info) {
 
-        if (err) { 
-            return next(err); 
+        if (err) {
+            return next(err);
         }
 
-        if (! user) {         
-            return res.json(401, { error: info.message });    
+        if (! user) {
+            return res.json(401, { error: info.message });
         }
-        
+
         req.logIn(user, function(err) {
-            if (err) { 
-                return next(err); 
+            if (err) {
+                return next(err);
             }
 
-            var shasum = crypto.createHash('sha1');                
+            var shasum = crypto.createHash('sha1');
             var date = Date.now();
             crypto.randomBytes(128, function(err, buf) {
                 if (err) {
@@ -136,10 +135,10 @@ var login = function(req, res, next) {
                 var token = shasum.digest('hex');
                 user.api_token = token;
                 user.save();
-                res.json({ 
-                    token: token, 
-                    date: date, 
-                    id: user._id 
+                res.json({
+                    token: token,
+                    date: date,
+                    id: user._id
                 });
             });
         });
