@@ -11,16 +11,20 @@ var api = {
 
     config: function(pluginConfig) {
         this._config = pluginConfig;
-        models = require('./models')(pluginConfig);
+        models = require('./server/models')(pluginConfig);
         logger = pluginConfig.logger;
         baucis = pluginConfig.baucis;
         config = pluginConfig.server_config;
     },
 
+    static: function() {
+        return __dirname + '/static';
+    },
+
     init: function() {
 
         // Configure Baucis to know about the application models
-        require('./api/baucis')(this._config);
+        require('./server/api/baucis')(this._config);
 
         var user = models.User;
 

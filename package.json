@@ -1,5 +1,5 @@
 {
-  "name": "Agrinaut",
+  "name": "agrinaut",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,7 +8,6 @@
   "dependencies": {
     "passport-local-mongoose": "^0.3.0",
     "passport": "~0.2",
-    "passport-local": "~0.1.6"    
+    "passport-local": "~0.1.6"
   }
 }
-
