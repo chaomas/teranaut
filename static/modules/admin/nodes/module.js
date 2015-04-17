@@ -3,21 +3,21 @@
 var VALID_LAT =/^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
 var VALID_LON =/^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
 
-angular.module('agrinaut.admin.nodes', ['agrinaut.notices', 'agrinaut.data.mongodb'])
+angular.module('teranaut.admin.nodes', ['teranaut.notices', 'teranaut.data.mongodb'])
 
-    .config(['$routeProvider', 'agrinautModuleBase', function($routeProvider, agrinautModuleBase) {        
+    .config(['$routeProvider', 'teranautModuleBase', function($routeProvider, teranautModuleBase) {        
             $routeProvider.
                 when('/admin/nodes', {
-                    templateUrl: agrinautModuleBase + '/search/grid.tpl.html',
-                    //templateUrl: agrinautModuleBase + '/admin/nodes/index.tpl.html',
+                    templateUrl: teranautModuleBase + '/search/grid.tpl.html',
+                    //templateUrl: teranautModuleBase + '/admin/nodes/index.tpl.html',
                     controller: 'AdminNodeListController'
                 }).
                 when('/admin/nodes/new', {
-                    templateUrl: agrinautModuleBase + '/admin/nodes/node-edit.tpl.html',
+                    templateUrl: teranautModuleBase + '/admin/nodes/node-edit.tpl.html',
                     controller: 'AdminNewNodeController'
                 }).
                 when('/admin/nodes/edit/:node_id', {
-                    templateUrl: agrinautModuleBase + '/admin/nodes/node-edit.tpl.html',
+                    templateUrl: teranautModuleBase + '/admin/nodes/node-edit.tpl.html',
                     controller: 'AdminEditNodeController'
                 });
         }

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.account').controller('LoginController', 
+angular.module('teranaut.account').controller('LoginController', 
     ['$scope', '$location', '$http', '$cookies', '$routeParams', 'authService', 'accountData', 
 function ($scope, $location, $http, $cookies, $routeParams, authService, accountData) {
     
@@ -46,7 +46,7 @@ function ($scope, $location, $http, $cookies, $routeParams, authService, account
     }  
 }]);
 
-angular.module('agrinaut.account').controller('LogoutController', 
+angular.module('teranaut.account').controller('LogoutController', 
     ['$scope', '$rootScope', '$http', '$location', '$cookies', 
 function ($scope, $rootScope, $http, $location, $cookies) {   
     $http.get('/logout').success(function() {
@@ -59,7 +59,7 @@ function ($scope, $rootScope, $http, $location, $cookies) {
     });
 }]);
 
-angular.module('agrinaut.account').controller('AccountUpdateController', 
+angular.module('teranaut.account').controller('AccountUpdateController', 
     ['$scope', 'accountData', 'uiNotices',
 function($scope, accountData, uiNotices) {    
     

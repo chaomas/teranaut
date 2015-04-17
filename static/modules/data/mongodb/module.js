@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.data.mongodb', [])
+angular.module('teranaut.data.mongodb', [])
 
     .provider('mongodbData', function() {
 

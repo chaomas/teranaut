@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.data.elasticsearch', [])
+angular.module('teranaut.data.elasticsearch', [])
 
     .provider('elasticsearchData', function() {
 

@@ -3,7 +3,7 @@
 /*
  * This controller is for the drop down date selector UI.
  */
-angular.module('agrinaut.search').controller('DateRangeController',
+angular.module('teranaut.search').controller('DateRangeController',
     ['$scope', 
 function ($scope) {
     $scope.startField = "last_e";

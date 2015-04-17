@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.util', ['base64'])
+angular.module('teranaut.util', ['base64'])
     // TODO: this should be refactored into a module dedicated to the task
     .factory('socket', ['$rootScope', function ($rootScope) {
         var socket = new Primus({ 

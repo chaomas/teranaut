@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('agrinaut.account', ['app.config', 'http-auth-interceptor', 'agrinaut.notices', 'agrinaut.data.mongodb'])
-    .config(['$routeProvider', 'agrinautModuleBase', function($routeProvider, agrinautModuleBase) {        
+angular.module('teranaut.account', ['app.config', 'http-auth-interceptor', 'teranaut.notices', 'teranaut.data.mongodb'])
+    .config(['$routeProvider', 'teranautModuleBase', function($routeProvider, teranautModuleBase) {        
             $routeProvider.
                 when('/user/account', {
-                    templateUrl: agrinautModuleBase + '/account/index.tpl.html'
+                    templateUrl: teranautModuleBase + '/account/index.tpl.html'
                 }).
                 when('/account/logout', {
-                    templateUrl: agrinautModuleBase + '/account/logout.tpl.html',
+                    templateUrl: teranautModuleBase + '/account/logout.tpl.html',
                     controller: 'LogoutController'
                 }).
                 when('/account/login', {
-                    templateUrl: agrinautModuleBase + '/account/login.tpl.html',
+                    templateUrl: teranautModuleBase + '/account/login.tpl.html',
                     controller: 'LoginController'
                 });
         }

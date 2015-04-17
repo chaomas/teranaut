@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.notices', [])
+angular.module('teranaut.notices', [])
     .config(['$httpProvider', function($httpProvider) {        
         // Setup the system wide HTTP error handler.
         $httpProvider.interceptors.push('httpErrorInterceptor'); 
@@ -62,7 +62,7 @@ angular.module('agrinaut.notices', [])
         }
     }])
 
-    .directive('uiNotices', ['agrinautModuleBase', function(agrinautModuleBase) {        
+    .directive('uiNotices', ['teranautModuleBase', function(teranautModuleBase) {        
         return {   
             scope: {},         
             controller: ['$scope', 'uiNotices', function($scope, uiNotices) {
@@ -71,6 +71,6 @@ angular.module('agrinaut.notices', [])
                 $scope.errors = uiNotices.errors;
                 $scope.messages = uiNotices.messages;
             }],
-            templateUrl: agrinautModuleBase + '/notices/notices.tpl.html'
+            templateUrl: teranautModuleBase + '/notices/notices.tpl.html'
         }
     }])

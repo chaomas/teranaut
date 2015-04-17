@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.data.mongodb', 'agrinaut.data.elasticsearch',
+angular.module('teranaut.search', ['app.config', 'teranaut.notices', 'teranaut.data.mongodb', 'teranaut.data.elasticsearch',
     'ui.bootstrap', 'ui.select2', 'jmdobry.angular-cache', 'truncate', 'ngCsv'])
 
     .service('searchContextService',
@@ -181,8 +181,8 @@ angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.d
         }
     }])
 
-    .service('searchUIService', ['$location', '$filter', 'pageTitle', 'agrinautModuleBase', 'uiNotices',
-     function($location, $filter, pageTitle, agrinautModuleBase, uiNotices) {
+    .service('searchUIService', ['$location', '$filter', 'pageTitle', 'teranautModuleBase', 'uiNotices',
+     function($location, $filter, pageTitle, teranautModuleBase, uiNotices) {
         return function(scope) {          
             var scope = scope;
             //var config = config;
@@ -225,7 +225,7 @@ angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.d
                         activeQuery = pendingQuery;
                         uiLoading = true;
                         
-                        scope.searchResultView = agrinautModuleBase + '/search/grid-loading.tpl.html';                        
+                        scope.searchResultView = teranautModuleBase + '/search/grid-loading.tpl.html';                        
 
                         scope.search.searchengine.search(scope.search, function(count, results) {                         
                             scope.searchResults = results;
@@ -505,7 +505,7 @@ angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.d
     }])
     
     
-    .directive('searchableGrid', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchableGrid', ['teranautModuleBase', function(teranautModuleBase) {
         return {
             scope: {
                 searchConfig: '=config'
@@ -593,37 +593,37 @@ angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.d
                 $scope.searchui.newSearch();
                 
             }],
-            templateUrl: agrinautModuleBase + '/search/searchable-grid.tpl.html'
+            templateUrl: teranautModuleBase + '/search/searchable-grid.tpl.html'
         }
     }])
 
-    .directive('searchPagination', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchPagination', ['teranautModuleBase', function(teranautModuleBase) {
         return {
-            templateUrl: agrinautModuleBase + '/search/pagination.tpl.html'
+            templateUrl: teranautModuleBase + '/search/pagination.tpl.html'
         }
     }])
-    .directive('searchAppToolbar', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchAppToolbar', ['teranautModuleBase', function(teranautModuleBase) {
         return {                        
-            templateUrl: agrinautModuleBase + '/search/toolbars/app-toolbar.tpl.html'
+            templateUrl: teranautModuleBase + '/search/toolbars/app-toolbar.tpl.html'
         }
     }])
-    .directive('searchDateToolbar', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchDateToolbar', ['teranautModuleBase', function(teranautModuleBase) {
         return {
-            templateUrl: agrinautModuleBase + '/search/toolbars/date-toolbar.tpl.html'
+            templateUrl: teranautModuleBase + '/search/toolbars/date-toolbar.tpl.html'
         }
     }])
-    .directive('dateRangeSelector', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('dateRangeSelector', ['teranautModuleBase', function(teranautModuleBase) {
         return {            
-            templateUrl: agrinautModuleBase + '/search/toolbars/date-dropdown.tpl.html'
+            templateUrl: teranautModuleBase + '/search/toolbars/date-dropdown.tpl.html'
         }
     }])
-    .directive('searchQueryToolbar', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchQueryToolbar', ['teranautModuleBase', function(teranautModuleBase) {
         return {            
-            templateUrl: agrinautModuleBase + '/search/toolbars/search-toolbar.tpl.html'
+            templateUrl: teranautModuleBase + '/search/toolbars/search-toolbar.tpl.html'
         }
     }])
 
-    .directive('searchGridToolbar', ['agrinautModuleBase', function(agrinautModuleBase) {
+    .directive('searchGridToolbar', ['teranautModuleBase', function(teranautModuleBase) {
         return {
             controller: ['$scope',
                 function($scope) {                      
@@ -646,7 +646,7 @@ angular.module('agrinaut.search', ['app.config', 'agrinaut.notices', 'agrinaut.d
                         }
                     }                    
                 }],
-            templateUrl: agrinautModuleBase + '/search/toolbars/grid-toolbar.tpl.html'
+            templateUrl: teranautModuleBase + '/search/toolbars/grid-toolbar.tpl.html'
         }
     }])
     

@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('agrinaut.admin.users').controller('AdminUserListController', 
-    ['$scope', '$routeParams', '$location', '$modal', 'uiNotices', 'adminUserData', 'agrinautModuleBase',
-function ($scope, $routeParams, $location, $modal, uiNotices, adminUserData, agrinautModuleBase) {
+angular.module('teranaut.admin.users').controller('AdminUserListController', 
+    ['$scope', '$routeParams', '$location', '$modal', 'uiNotices', 'adminUserData', 'teranautModuleBase',
+function ($scope, $routeParams, $location, $modal, uiNotices, adminUserData, teranautModuleBase) {
     
     var uiController = {
         /* 
@@ -91,19 +91,19 @@ function ($scope, $routeParams, $location, $modal, uiNotices, adminUserData, agr
         interactiveUI: true,
         dateToolbar: false,
         fields: fields,
-        gridView: agrinautModuleBase + '/admin/users/search-results.tpl.html',
-        searchView: agrinautModuleBase + '/admin/users/search-controls.tpl.html',
-        toolbarView: agrinautModuleBase + '/admin/users/search-toolbar.tpl.html',
+        gridView: teranautModuleBase + '/admin/users/search-results.tpl.html',
+        searchView: teranautModuleBase + '/admin/users/search-controls.tpl.html',
+        toolbarView: teranautModuleBase + '/admin/users/search-toolbar.tpl.html',
         uiController: uiController
     };
 }]);
 
-angular.module('agrinaut.admin.users').controller('AdminEditUserController',
-    ['$scope', '$location', '$routeParams', 'uiNotices', 'accountData', 'adminUserData', 'agrinautAdminUserRoles',
-function($scope, $location, $routeParams, uiNotices, accountData, adminUserData, agrinautAdminUserRoles) {
+angular.module('teranaut.admin.users').controller('AdminEditUserController',
+    ['$scope', '$location', '$routeParams', 'uiNotices', 'accountData', 'adminUserData', 'teranautAdminUserRoles',
+function($scope, $location, $routeParams, uiNotices, accountData, adminUserData, teranautAdminUserRoles) {
     $scope.title = "Edit User";
     $scope.updating = true
-    $scope.roles = agrinautAdminUserRoles;
+    $scope.roles = teranautAdminUserRoles;
     $scope.user = adminUserData.getUser($routeParams.username).get()
     
     $scope.update = function() {
@@ -138,11 +138,11 @@ function($scope, $location, $routeParams, uiNotices, accountData, adminUserData,
     }
 }]);
 
-angular.module('agrinaut.admin.users').controller('AdminNewUserController', 
-    ['$scope', '$location', 'uiNotices', 'accountData', 'adminUserData', 'agrinautAdminUserRoles',
-function($scope, $location, uiNotices, accountData, adminUserData, agrinautAdminUserRoles) {
+angular.module('teranaut.admin.users').controller('AdminNewUserController', 
+    ['$scope', '$location', 'uiNotices', 'accountData', 'adminUserData', 'teranautAdminUserRoles',
+function($scope, $location, uiNotices, accountData, adminUserData, teranautAdminUserRoles) {
     $scope.title = "New User";
-    $scope.roles = agrinautAdminUserRoles;
+    $scope.roles = teranautAdminUserRoles;
     $scope.user = { role: 'user' };
 
     $scope.create = function() {

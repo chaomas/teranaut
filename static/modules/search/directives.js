@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('agrinaut.search').
+angular.module('teranaut.search').
     directive('queryFilters', ['$compile', '$templateCache', '$http', function ($compile, $templateCache, $http) {    
         var qe = window.QueryEngine;
 

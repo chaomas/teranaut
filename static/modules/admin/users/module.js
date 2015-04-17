@@ -1,18 +1,18 @@
 'use strict';
 
-angular.module('agrinaut.admin.users', ['app.config', 'agrinaut.notices', 'agrinaut.data.mongodb'])
-    .config(['$routeProvider', 'agrinautModuleBase', function($routeProvider, agrinautModuleBase) {        
+angular.module('teranaut.admin.users', ['app.config', 'teranaut.notices', 'teranaut.data.mongodb'])
+    .config(['$routeProvider', 'teranautModuleBase', function($routeProvider, teranautModuleBase) {        
             $routeProvider.
                 when('/admin/users', {
-                    templateUrl: agrinautModuleBase + '/search/grid.tpl.html',
+                    templateUrl: teranautModuleBase + '/search/grid.tpl.html',
                     controller: 'AdminUserListController'
                 }).
                 when('/admin/users/new', {
-                    templateUrl: agrinautModuleBase + '/admin/users/user-edit.tpl.html',
+                    templateUrl: teranautModuleBase + '/admin/users/user-edit.tpl.html',
                     controller: 'AdminNewUserController'
                 }).
                 when('/admin/users/edit/:username', {
-                    templateUrl: agrinautModuleBase + '/admin/users/user-edit.tpl.html',
+                    templateUrl: teranautModuleBase + '/admin/users/user-edit.tpl.html',
                     controller: 'AdminEditUserController'
                 });
         }

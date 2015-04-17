@@ -1,6 +1,6 @@
-var mongoose = require('../../agriserver/lib/mongo_connect');
+var mongoose = require('../../teraserver/lib/mongo_connect');
 
-var config = require('../../agriserver/lib/sysconfig')
+var config = require('../../teraserver/lib/sysconfig')
 
 var models = require("../server/models")({
     mongoose: mongoose,

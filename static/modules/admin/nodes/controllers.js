@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('agrinaut.admin.nodes').controller('AdminNodeListController', 
-    ['$scope', '$routeParams', '$location', '$modal', 'adminNodeData', 'uiNotices', 'agrinautModuleBase',
-function ($scope, $routeParams, $location, $modal, adminNodeData, uiNotices, agrinautModuleBase) {
+angular.module('teranaut.admin.nodes').controller('AdminNodeListController', 
+    ['$scope', '$routeParams', '$location', '$modal', 'adminNodeData', 'uiNotices', 'teranautModuleBase',
+function ($scope, $routeParams, $location, $modal, adminNodeData, uiNotices, teranautModuleBase) {
     
     var uiController = {
         /* 
@@ -80,14 +80,14 @@ function ($scope, $routeParams, $location, $modal, adminNodeData, uiNotices, agr
         interactiveUI: true,
         dateToolbar: false,
         fields: fields,
-        gridView: agrinautModuleBase + '/admin/nodes/search-results.tpl.html',
-        searchView: agrinautModuleBase + '/admin/nodes/search-controls.tpl.html',
-        toolbarView: agrinautModuleBase + '/admin/nodes/search-toolbar.tpl.html',
+        gridView: teranautModuleBase + '/admin/nodes/search-results.tpl.html',
+        searchView: teranautModuleBase + '/admin/nodes/search-controls.tpl.html',
+        toolbarView: teranautModuleBase + '/admin/nodes/search-toolbar.tpl.html',
         uiController: uiController
     };
 }]);
 
-angular.module('agrinaut.admin.nodes').controller('AdminEditNodeController', 
+angular.module('teranaut.admin.nodes').controller('AdminEditNodeController', 
     ['$rootScope', '$scope', '$location', '$routeParams', '$timeout', 'uiNotices', 'accountData', 'adminNodeData', 
 function($rootScope, $scope, $location, $routeParams, $timeout, uiNotices, accountData, adminNodeData) {
     $rootScope.message = null;
@@ -147,7 +147,7 @@ function($rootScope, $scope, $location, $routeParams, $timeout, uiNotices, accou
     }
 }]);
 
-angular.module('agrinaut.admin.nodes').controller('AdminNewNodeController', 
+angular.module('teranaut.admin.nodes').controller('AdminNewNodeController', 
     ['$rootScope', '$scope', '$location', '$timeout', 'uiNotices', 'accountData', 'adminNodeData', 
 function($rootScope, $scope, $location, $timeout, uiNotices, accountData, adminNodeData) {
     $scope.title = "New Node";
