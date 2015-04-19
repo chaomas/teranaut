@@ -1,10 +1,9 @@
 'use strict';
 
 var fs = require('fs');
-var passport = require('passport');
 var crypto = require("crypto");
 
-var logger, models, baucis, config;
+var logger, models, baucis, config, passport;
 
 var api = {
     _config: undefined,
@@ -12,8 +11,9 @@ var api = {
     config: function(pluginConfig) {
         this._config = pluginConfig;
         models = require('./server/models')(pluginConfig);
-        logger = pluginConfig.logger;
+        logger = pluginConfig.logger;        
         baucis = pluginConfig.baucis;
+        passport = pluginConfig.passport; 
         config = pluginConfig.server_config;
     },
 

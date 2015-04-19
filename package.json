@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "passport-local-mongoose": "^0.3.0",
-    "passport": "~0.2",
     "passport-local": "~0.1.6"
   }
 }
