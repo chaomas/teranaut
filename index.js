@@ -3,18 +3,37 @@
 var fs = require('fs');
 var crypto = require("crypto");
 
-var logger, models, baucis, config, passport;
+var logger, models, baucis, config, passport, userModel;
 
 var api = {
     _config: undefined,
 
     config: function(pluginConfig) {
         this._config = pluginConfig;
-        models = require('./server/models')(pluginConfig);
         logger = pluginConfig.logger;        
         baucis = pluginConfig.baucis;
         passport = pluginConfig.passport; 
         config = pluginConfig.server_config;
+
+        var modelConfig = {
+            mongoose: pluginConfig.mongodb,
+            logger: logger
+        }
+
+        if (config.teranaut && config.teranaut.models) {
+            models = require(config.teranaut.models)(modelConfig);    
+        }
+        else {
+            models = require('./server/models')(modelConfig);    
+        }
+        
+        if (config.teranaut && config.teranaut.auth && config.teranaut.auth.user_model) {
+            userModel = models[config.teranaut.auth.user_model];
+        }
+        else {
+            userModel = models.User;
+        }
+        
     },
 
     static: function() {
@@ -23,14 +42,15 @@ var api = {
 
     init: function() {
 
-        // Configure Baucis to know about the application models
-        require('./server/api/baucis')(this._config);
+        if (! (config.teranaut && config.teranaut.models)) {
+            // Configure Baucis to know about the application models
+            require('./server/api/baucis')(this._config);
+        }
+        //var user = models.User;
 
-        var user = models.User;
-
-        passport.use(user.createStrategy());
-        passport.serializeUser(user.serializeUser());
-        passport.deserializeUser(user.deserializeUser());
+        passport.use(userModel.createStrategy());
+        passport.serializeUser(userModel.serializeUser());
+        passport.deserializeUser(userModel.deserializeUser());
     },
 
     pre: function() {
@@ -41,6 +61,7 @@ var api = {
     routes: function(deferred) {
         // Login function to generate an API token
         this._config.app.use('/api/v1/token', login);
+        this._config.app.use('/api/v1/login', login);
 
         // All API endpoints require authentication
         this._config.app.use('/api/v1', ensureAuthenticated);
@@ -69,13 +90,17 @@ var api = {
 }
 
 var ensureAuthenticated = function(req, res, next) {
+    // We allow creating new accounts without authentication.
+    // TODO: THIS shouldn't be in the platform. It's app specific
+    if (req.url === '/accounts' && req.method === 'POST') return next();
+
     // See if the session is authenticated
     if (req.isAuthenticated()) {
         return next();
     }
     // API auth based on tokens
     else if (req.query.token) {
-        models.User.findOne({api_token: req.query.token}, function(err, account) {
+        userModel.findOne({api_token: req.query.token}, function(err, account) {
             if (err) {
                 throw err;
             }
@@ -120,6 +145,11 @@ var login = function(req, res, next) {
 
         if (! user) {
             return res.json(401, { error: info.message });
+        }
+
+        // TODO: this probably doesn't belong in the platfrom. It's APP specific
+        if (! user.email_validated) {            
+            return res.json(401, { error: 'Account has not been activated' });    
         }
 
         req.logIn(user, function(err) {

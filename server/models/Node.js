@@ -4,7 +4,7 @@ var model;
 
 module.exports = function(config) {
     var logger = config.logger;
-    var mongoose = config.mongodb;
+    var mongoose = config.mongoose;
 
     if (! model) {
         var Schema = mongoose.Schema;
